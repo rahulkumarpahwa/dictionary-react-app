@@ -1,31 +1,29 @@
-import { IoIosSunny, IoIosMoon } from "react-icons/io";
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
 const Toggle = () => {
-  const changeTheme = () => {
-    const sun = document.querySelector(".sun");
-    const moon = document.querySelector(".moon");
-    if (document.documentElement.classList.contains("dark")) {
-      document.documentElement.classList.toggle("dark");
-      moon.classList.add("hidden");
-      sun.classList.remove("hidden");
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.toggle("dark");
-      sun.classList.add("hidden");
-      moon.classList.remove("hidden");
+      document.documentElement.classList.remove("dark");
     }
-  };
+  }, [darkMode]);
 
   return (
-    <div>
-      <IoIosSunny
-        className="sun text-3xl bg-white rounded-full border-black border p-1"
-        onClick={changeTheme}
-      />
-      <IoIosMoon
-        className="moon hidden text-3xl bg-black text-white rounded-full border border-white p-1"
-        onClick={changeTheme}
-      />
+    <div className="flex justify-end">
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-lg flex items-center space-x-2"
+      >
+        <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
+        <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
+      </button>
     </div>
   );
 };
+
 export default Toggle;
